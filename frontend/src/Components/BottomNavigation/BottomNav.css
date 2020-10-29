@@ -1,0 +1,37 @@
+.nav-wrapper {
+    font-family: 'Roboto', sans-serif;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 768px;
+    height: 3.75em;
+    background: #E4E4E4;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    overflow: hidden;
+}
+
+.navlink {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 120px;
+    height: 100%;
+    font-size: 12px;
+    color: #4B4B4B;
+    fill: #4B4B4B;
+    text-decoration: none;
+    transition: all .2s ease-in-out;
+}
+
+.navlink-active {
+    color: #1D1D1D;
+    fill: #1D1D1D; 
+    font-size: 14px;
+}

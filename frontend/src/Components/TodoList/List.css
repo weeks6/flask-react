@@ -1,0 +1,96 @@
+.todo-list {
+    margin-top: 8px;
+    list-style: none;
+    margin-bottom: 4em;
+    padding: 0;
+}
+
+.todo-wrapper {
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+}
+
+.todo-wrapper::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    width: 80%;
+    background-color: #3B3B3B;
+    height: 1px;
+}
+
+.todo-content {
+    flex-grow: 1;
+}
+
+.checkbox {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    margin: 24px;
+}
+
+.checkbox::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+}
+
+.todo-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-height: 20px;
+}
+
+.todo-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    color: #CBCBCB;
+}
+
+.todo-exp {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    color: #CBCBCB;
+    margin-left: 10px;
+}
+
+.todo-description {
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 19px;
+    color: #E4E4E4;
+    max-width: 190px;
+    max-height: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.priority-orb {
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    margin-left: 24px;
+}
+
+.dragndrop {
+    margin: 24px;
+}
