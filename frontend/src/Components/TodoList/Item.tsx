@@ -21,7 +21,7 @@ export interface ItemProps {
 
 export const Item: React.FC<ItemProps> = ({item, ripple}) => {
 
-  const {title, description, exp, priority, completed} = item
+  const {title, description, exp, priority} = item
 
     return (
       <div className="todo-wrapper" onClick={event => ripple && Ripple(event)}>
