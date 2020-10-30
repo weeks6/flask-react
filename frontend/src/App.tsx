@@ -27,7 +27,7 @@ const App: React.FC = () => {
       <BottomNav>
         <NavItem ripple to="/today">
           <TodayIconSvg /> 
-          Today
+          Gay
         </NavItem>
         <NavItem ripple to="/projects">
           <ProjectIconSvg /> 

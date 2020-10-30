@@ -10,6 +10,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 
 # Turn off buffering
 ENV PYTHONUNBUFFERED=1
+ENV TOKEN_SECRET=5Iq5Fw6vBKACiNt8E3M5ahQnDJxXnhUpB3zFzZ5T5PrcV6jsuQPixx7AMOSNORJpo1XPmhvlcnio4p21
 
 # Install requirements using pip
 ADD requirements.txt .

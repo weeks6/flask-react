@@ -1,4 +1,12 @@
 .vscode
+.idea
+./backend/.venv
+backend/.venv/
+backend/__pycache__
 
 node_modules
 build
+
+.env
+venv/
+.venv/
