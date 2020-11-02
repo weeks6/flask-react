@@ -5,10 +5,14 @@ from Models.User import User
 from passlib.hash import sha256_crypt
 from Auth.tokens import create_access_token, create_refresh_token
 from Middlewares.protected import protected
+from flask_cors import CORS
+import os
 
 app = Flask(__name__)
+CORS(app)
+MONGO_CONNECT = str(os.environ.get('MONGO_CONNECT'))
+connect(MONGO_CONNECT)
 
-connect("mongodb+srv://bruh:BridNeedle2001@maincluster.cbxwg.mongodb.net/webapp?retryWrites=true&w=majority")
 
 @app.route('/index')
 def index():
@@ -27,7 +31,7 @@ def auth_signup():
         return Response('Success', status=200)
 
 
-@app.route('/api/auth/signin', methods=['GET'])
+@app.route('/api/auth/signin', methods=['POST'])
 def auth_signin():
     email, password = request.json.values()
     try:

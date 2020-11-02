@@ -5,3 +5,4 @@ dnspython
 pymodm
 pyjwt
 passlib
+flask-cors

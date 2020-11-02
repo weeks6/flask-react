@@ -1,33 +1,25 @@
-    
-import "Common/ripple.css"
+import 'Common/ripple.css'
 
 export const Ripple = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-
-    const elementToRipple = event.currentTarget
-    const rippleCircle = document.createElement('span')
-    const diameter = Math.max(elementToRipple.clientWidth, elementToRipple.clientHeight)
+    const el = event.currentTarget
+    el.classList.add('ripple')
+    
+    el.style.setProperty('--ripple-animation', '')
+    const clientX = event.clientX
+    const clientY = event.clientY
+    
+    const diameter = Math.max(el.clientWidth, el.clientHeight)
     const radius = diameter/2
 
-    rippleCircle.style.width = rippleCircle.style.height = `${diameter}px`
+    const rippleWidth = `${diameter}px`
+    const rippleHeight = `${diameter}px`
 
-    console.log(elementToRipple.getBoundingClientRect());
-    console.log(event.clientX)
-    console.log(event.clientY);
-    
-     
-    
-    rippleCircle.style.left = `${event.clientX - elementToRipple.getBoundingClientRect().x - radius}px`
-    rippleCircle.style.top = `${event.clientY - elementToRipple.getBoundingClientRect().y - radius}px`
-    // console.log(event.clientX)
-    // console.log(event.clientY)
+    const rippleLeft = `${clientX - el.getBoundingClientRect().x - radius}px`
+    const rippleTop = `${clientY - el.getBoundingClientRect().y - radius}px`
 
-    rippleCircle.classList.add("ripple-animate");
-    
-    const rippleEls = document.getElementsByClassName("ripple-animate")[0]
-
-    if (rippleEls) {
-        rippleEls.remove()
-    }
-
-    elementToRipple.appendChild(rippleCircle)
+    el.style.setProperty('--ripple-width', rippleWidth)
+    el.style.setProperty('--ripple-height', rippleHeight)
+    el.style.setProperty('--ripple-top', rippleTop)
+    el.style.setProperty('--ripple-left', rippleLeft)
+    el.style.setProperty('--ripple-animation', 'ripple')
 }
