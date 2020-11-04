@@ -11,6 +11,7 @@ import { AuthContext, AuthProvider } from 'Common/State/AuthContext'
 import { Profile } from 'Components/Profile/Profile';
 import { GuardedRoute } from 'Common/GuardedRoute/GuardedRoute'
 import { SignIn } from 'Components/Auth/SignIn';
+import { SignUp } from 'Components/Auth/SignUp'
 
 const App: React.FC = () => {
 
@@ -26,6 +27,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/today">
               <Today/>
+            </Route>
+            <Route path="/signup">
+              <SignUp/>
             </Route>
             <GuardedRoute path="/profile">
               <Profile/>

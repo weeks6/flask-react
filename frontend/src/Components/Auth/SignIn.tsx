@@ -1,6 +1,7 @@
+import './Form.css'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
-// import useFetch from 'Common/Hooks/useFetch'
 import axios from 'axios'
+import { Field } from "Components/Auth/Field";
 
 interface FormFields {
     email?: string
@@ -8,6 +9,8 @@ interface FormFields {
 }
 
 export const SignIn: React.FC = () => {
+
+    const [cookie, setCookie] = useState('')
 
     // TODO: come up with a better way to set initial form state
     const [formState, setFormState] = useState({
@@ -29,16 +32,24 @@ export const SignIn: React.FC = () => {
         e.preventDefault()
         const url = `http://${process.env.REACT_APP_BACKEND}/api/auth/signin`
         const payload = formState
-        axios.post(url, JSON.stringify(payload))
-            .then(res => console.log(res))
+        
+        axios.post(url, {data: JSON.stringify(payload)})
+            .then(res => {
+                console.log(document.cookie)
+                setCookie(res.headers['Set-Cookie'])
+            })
             .catch(console.log)
     }
 
     return (
-        <form onSubmit={(e) => submitSignIn(e)}>
-            <input type="email" value={formState.email} onChange={e => handleEmailChange(e)}/>
-            <input type="password" value={formState.password} onChange={e => handlePasswordChange(e)}/>
-            <input type="submit" value="Submit"/>
-        </form>
+        <>
+            <form className="form" onSubmit={(e) => submitSignIn(e)}>
+                <Field type="email" label="Email" value={formState.email} changeHandle={handleEmailChange}/>
+                <input type="password" value={formState.password} onChange={e => handlePasswordChange(e)}/>
+                <input type="submit" value="Submit"/>
+            </form>
+
+            {cookie}
+        </>
     )
 }

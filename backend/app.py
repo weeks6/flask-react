@@ -5,23 +5,23 @@ from Models.User import User
 from passlib.hash import sha256_crypt
 from Auth.tokens import create_access_token, create_refresh_token
 from Middlewares.protected import protected
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
+import json
 import os
 
-app = Flask(__name__)
-CORS(app)
 MONGO_CONNECT = str(os.environ.get('MONGO_CONNECT'))
 connect(MONGO_CONNECT)
 
-
-@app.route('/index')
-def index():
-    return Response("some", status=200)
+app = Flask(__name__)
+CORS(app, supports_credentials=True)
+# app.run(debug=True, port=5000)
 
 
 @app.route('/api/auth/signup', methods=['POST'])
+@cross_origin()
 def auth_signup():
-    email, name, password = request.json.values()
+    req_data = json.loads(request.json['data'])
+    name, email, password = req_data.values()
     hashed_password = sha256_crypt.hash(password)
     try:
         User.objects.get({'email': email})
@@ -32,8 +32,10 @@ def auth_signup():
 
 
 @app.route('/api/auth/signin', methods=['POST'])
+@cross_origin()
 def auth_signin():
-    email, password = request.json.values()
+    req_data = json.loads(request.json['data'])
+    email, password = req_data.values()
     try:
         user = User.objects.get({'email': email})
         if sha256_crypt.verify(password, user.password):
@@ -56,6 +58,3 @@ def auth_signin():
 def protected():
     return Response('k', status=200)
 
-if __name__ == "__main__":
-    print("bruh moment")
-    app.run(debug=True, port=5000)

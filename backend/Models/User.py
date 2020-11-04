@@ -5,3 +5,4 @@ class User(MongoModel):
     email = fields.EmailField()
     name = fields.CharField()
     password = fields.CharField()
+    accessToken = fields.CharField()
