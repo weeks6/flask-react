@@ -13,7 +13,7 @@ MONGO_CONNECT = str(os.environ.get('MONGO_CONNECT'))
 connect(MONGO_CONNECT)
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=True, expose_headers=['Set-Cookie'])
 # app.run(debug=True, port=5000)
 
 
@@ -34,8 +34,10 @@ def auth_signup():
 @app.route('/api/auth/signin', methods=['POST'])
 @cross_origin()
 def auth_signin():
-    req_data = json.loads(request.json['data'])
-    email, password = req_data.values()
+
+    req = dict(json.loads(request.data))
+    email, password = req.values()
+    print(email, password)
     try:
         user = User.objects.get({'email': email})
         if sha256_crypt.verify(password, user.password):
@@ -45,8 +47,10 @@ def auth_signin():
             access_token = create_access_token(user)
 
             response = Response(access_token, status=200)
-            response.headers['access-control-expose-headers'] = 'Set-Cookie'
-            response.set_cookie('jid', refresh_token, httponly=True, path='*')
+            response.headers['Access-Control-Expose-Headers'] = 'Set-Cookie'
+            response.headers['Access-Control-Allow-Credentials'] = 'true'
+
+            response.set_cookie('jid', refresh_token, httponly=True, domain='localhost')
             return response
         else:
             return Response('Not allowed', status=403)

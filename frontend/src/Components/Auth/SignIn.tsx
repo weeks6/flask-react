@@ -30,14 +30,23 @@ export const SignIn: React.FC = () => {
         e.preventDefault()
         const url = `http://${process.env.REACT_APP_BACKEND}/api/auth/signin`
         const payload = formState
-        
-        axios.post(url, {
-            data: JSON.stringify(payload),
-            withCredentials: true,
-            credentials: 'cross-origin',
+
+        fetch(url, {
+            method: 'POST',
+            mode: 'cors', 
+            credentials: "include",
+            body: JSON.stringify(payload)
         })
-            .then(res => console.log(res))
-            .catch(console.log)
+        .then(res => console.log(res))
+        .catch(e => console.log(e))
+        
+        // axios.post(url, {
+        //     data: JSON.stringify(payload),
+        //     withCredentials: true,
+        //     credentials: 'include',
+        // })
+        //     .then(res => console.log(res))
+        //     .catch(console.log)
     }
 
     return (
