@@ -5,16 +5,18 @@ interface Props {
     type: string,
     label?: string,
     value: any,
-    changeHandle: (e: React.ChangeEvent<HTMLInputElement>) => void
+    notice?: string,
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const Field: React.FC<Props> = ({type, label, value, changeHandle}) => {
-
+export const Field: React.FC<Props> = ({type, label, value, onChange, notice}) => {
 
     return (
         <div className="field">
-            <label htmlFor={`inputField${type}${label}`} className="field-label">{label}</label>
-            <input type={type} value={value} name={`inputField${type}${label}`} className="field-input" onChange={e => changeHandle(e)}/>             
+            <input type={type} className="field-input" value={value} required onChange={e => onChange(e)}/>
+            <label className="label-text">{label}</label>
+            <span className="field-bar"></span>
+            <span className="field-notice">{notice}</span>
         </div>
     )
 }

@@ -45,7 +45,8 @@ def auth_signin():
             access_token = create_access_token(user)
 
             response = Response(access_token, status=200)
-            response.set_cookie('jid', refresh_token, httponly=True)
+            response.headers['access-control-expose-headers'] = 'Set-Cookie'
+            response.set_cookie('jid', refresh_token, httponly=True, path='*')
             return response
         else:
             return Response('Not allowed', status=403)
@@ -53,8 +54,14 @@ def auth_signin():
         return Response('User does not exist', status=404)
 
 
-@app.route('/api/protected')
+@app.route('/api/auth/refresh_token', methods=['POST'])
+def refresh():
+    return Response('k', status=200)
+
+@app.route('/api/user')
 @protected
-def protected():
+def user():
+    req_data = json.loads(request.json['data'])
+
     return Response('k', status=200)
 

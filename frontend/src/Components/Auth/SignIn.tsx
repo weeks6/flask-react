@@ -10,8 +10,6 @@ interface FormFields {
 
 export const SignIn: React.FC = () => {
 
-    const [cookie, setCookie] = useState('')
-
     // TODO: come up with a better way to set initial form state
     const [formState, setFormState] = useState({
         email: '',
@@ -33,23 +31,22 @@ export const SignIn: React.FC = () => {
         const url = `http://${process.env.REACT_APP_BACKEND}/api/auth/signin`
         const payload = formState
         
-        axios.post(url, {data: JSON.stringify(payload)})
-            .then(res => {
-                console.log(document.cookie)
-                setCookie(res.headers['Set-Cookie'])
-            })
+        axios.post(url, {
+            data: JSON.stringify(payload),
+            withCredentials: true,
+            credentials: 'cross-origin',
+        })
+            .then(res => console.log(res))
             .catch(console.log)
     }
 
     return (
         <>
             <form className="form" onSubmit={(e) => submitSignIn(e)}>
-                <Field type="email" label="Email" value={formState.email} changeHandle={handleEmailChange}/>
-                <input type="password" value={formState.password} onChange={e => handlePasswordChange(e)}/>
+                <Field type="email" label="Email" value={formState.email} onChange={handleEmailChange}/>
+                <Field type="password" label="Password" value={formState.password} onChange={handlePasswordChange}/>
                 <input type="submit" value="Submit"/>
             </form>
-
-            {cookie}
         </>
     )
 }

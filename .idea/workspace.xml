@@ -19,10 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a05b5929-07c1-4fba-8e39-eea508ff48f3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/flask-react.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/flask-react.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="a05b5929-07c1-4fba-8e39-eea508ff48f3" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,6 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="JupyterTrust" id="8032f6ad-3f44-4581-8ff0-2c077bd55635" />
   <component name="ProjectId" id="1jY6WIHvteUK6Plt3bQ9MdBPsAX" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -44,7 +42,7 @@
     <property name="ts.external.directory.path" value="C:\Users\User\Documents\291\Ilin\flask-react\frontend\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -56,6 +54,7 @@
       <option name="presentableId" value="Default" />
       <updated>1603968709036</updated>
       <workItem from="1603968710539" duration="805000" />
+      <workItem from="1604562783829" duration="154000" />
     </task>
     <servers />
   </component>
@@ -72,6 +71,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1603968908741">
