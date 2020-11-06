@@ -13,7 +13,7 @@ def create_access_token(user):
     }
 
     access_token = jwt.encode(payload, TOKEN_SECRET, algorithm='HS256')
-    return access_token
+    return access_token.decode("utf-8")
 
 
 def create_refresh_token(user):

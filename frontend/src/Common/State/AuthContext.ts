@@ -1,4 +1,8 @@
 import React from 'react'
 
-export const AuthContext = React.createContext(false)
+export interface User {
+    id: string
+}
+
+export const AuthContext = React.createContext({} as User)
 export const AuthProvider = AuthContext.Provider

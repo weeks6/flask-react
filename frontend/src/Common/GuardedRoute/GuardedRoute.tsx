@@ -8,8 +8,8 @@ interface Props {
 }
 
 export const GuardedRoute: React.FC<Props> = ({children, path, ...rest }) => {
-    
-    const isAuth = useContext(AuthContext)
+
+    const isAuth = localStorage.getItem('jid')
     
     return (
         <Route {...rest} path={path} render={() => (

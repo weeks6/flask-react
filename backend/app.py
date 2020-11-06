@@ -1,4 +1,4 @@
-from flask import Flask, Response, request, jsonify
+from flask import Flask, Response, request, make_response
 from pymodm.connection import connect
 from pymodm.errors import DoesNotExist
 from Models.User import User
@@ -45,12 +45,14 @@ def auth_signin():
             # creating tokens
             refresh_token = create_refresh_token(user)
             access_token = create_access_token(user)
+            response_obj = {'access_token': access_token}
 
-            response = Response(access_token, status=200)
+            response = make_response(json.dumps(response_obj))
+            response.status_code = 200
             response.headers['Access-Control-Expose-Headers'] = 'Set-Cookie'
             response.headers['Access-Control-Allow-Credentials'] = 'true'
 
-            response.set_cookie('jid', refresh_token, httponly=True, domain='localhost')
+            # response.set_cookie('jid', refresh_token, httponly=True, domain='localhost')
             return response
         else:
             return Response('Not allowed', status=403)
@@ -62,10 +64,11 @@ def auth_signin():
 def refresh():
     return Response('k', status=200)
 
-@app.route('/api/user')
+
+@app.route('/api/auth/user', methods=['GET'])
 @protected
 def user():
-    req_data = json.loads(request.json['data'])
+    print(request.headers['authorization'])
 
     return Response('k', status=200)
 

@@ -1,7 +1,9 @@
 import './Form.css'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import { Field } from "Components/Auth/Field";
+import { AuthContext } from "Common/State/AuthContext"
 
 interface FormFields {
     email?: string
@@ -9,6 +11,8 @@ interface FormFields {
 }
 
 export const SignIn: React.FC = () => {
+
+    const history = useHistory()
 
     // TODO: come up with a better way to set initial form state
     const [formState, setFormState] = useState({
@@ -36,18 +40,22 @@ export const SignIn: React.FC = () => {
             mode: 'cors', 
             credentials: "include",
             body: JSON.stringify(payload)
-        })
-        .then(res => console.log(res))
-        .catch(e => console.log(e))
-        
-        // axios.post(url, {
-        //     data: JSON.stringify(payload),
-        //     withCredentials: true,
-        //     credentials: 'include',
-        // })
-        //     .then(res => console.log(res))
-        //     .catch(console.log)
-    }
+        }) 
+            .then(res => {
+                if (res.status === 200) {
+                    return res
+                } else {
+                    throw new Error('Wrong creds')
+                }
+            })
+            .then(res => res.json())
+            .then(data =>{
+                localStorage.setItem('jid', data.access_token)
+                history.push('/profile')
+                
+            })
+            .catch(e => console.log(e))
+        }
 
     return (
         <>
