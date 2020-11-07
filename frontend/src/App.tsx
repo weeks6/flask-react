@@ -12,6 +12,8 @@ import { Profile } from 'Components/Profile/Profile';
 import { GuardedRoute } from 'Common/GuardedRoute/GuardedRoute'
 import { SignIn } from 'Components/Auth/SignIn';
 import { SignUp } from 'Components/Auth/SignUp'
+import { DrawerNavigation } from 'Components/DrawerNavigation/DrawerNavigation';
+import { DrawerItem } from 'Components/DrawerNavigation/DrawerItem';
 
 const App: React.FC = () => {
 
@@ -32,7 +34,24 @@ const App: React.FC = () => {
 
   return (
     <>
+
     <BrowserRouter>
+
+      <DrawerNavigation>  
+        <DrawerItem ripple to="/today">
+          <TodayIconSvg /> 
+          Today
+        </DrawerItem>
+        <DrawerItem ripple to="/projects">
+          <ProjectIconSvg /> 
+          Projects
+        </DrawerItem>
+        <DrawerItem ripple to="/profile">
+          <ProfileIconSvg /> 
+          You
+        </DrawerItem>
+      </DrawerNavigation>
+
       <Switch>
         {/* @TODO change it to actual auth function */}
         <AuthProvider value={user}>
@@ -53,7 +72,9 @@ const App: React.FC = () => {
         </AuthProvider>  
       </Switch>
 
-      <BottomNav>
+      
+
+      {/* <BottomNav>
         <NavItem ripple to="/today">
           <TodayIconSvg /> 
           Today
@@ -66,7 +87,7 @@ const App: React.FC = () => {
           <ProfileIconSvg /> 
           You
         </NavItem>
-      </BottomNav>
+      </BottomNav> */}
 
     </BrowserRouter>
     </>
