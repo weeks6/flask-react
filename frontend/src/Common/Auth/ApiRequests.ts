@@ -1,4 +1,4 @@
-import axios, {AxiosError} from 'axios'
+import axios, { AxiosError } from 'axios';
 import { getRefreshToken, getAccessToken ,setAccessToken } from 'Common/Auth/Tokens'
 
 export const refreshAccessToken = async () => {

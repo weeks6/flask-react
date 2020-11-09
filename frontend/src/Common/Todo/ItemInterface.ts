@@ -1,8 +1,8 @@
 import { Priorities } from 'Common/Todo/PrioritiesEnum'
 
 export interface TodoItem {
-    user_id: string,
-    project_id: string,
+    user_id?: string,
+    project_id?: string,
     project_title: string,
     date: string,
     completed: boolean,

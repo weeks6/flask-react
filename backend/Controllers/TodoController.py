@@ -13,8 +13,18 @@ from app import app
 @app.route('/api/todos/new', methods=['POST'])
 @protected
 def new_todo():
+    TOKEN_SECRET = os.environ.get('TOKEN_SECRET')
     todo = json.loads(request.data)
-    Todo(todo['user_id'], todo['date'], todo['completed'], todo['title'], todo['description']).save()
+    access_token = str(request.headers.get('Authorization')).split()[1]
+    user_id = jwt.decode(access_token, TOKEN_SECRET, algorithms=['HS256'])['user_id']
+    Todo(user_id,
+         todo['project_title'],
+         todo['date'],
+         todo['completed'],
+         todo['title'],
+         todo['description'],
+         todo['priority'],
+         todo['experience']).save()
     res = make_response('Ok')
     res.status_code = 200
     return res

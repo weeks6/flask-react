@@ -6,12 +6,11 @@ import { Body } from 'Body';
 
 const App: React.FC = () => {
 
-
   return (
     <>
-    <BrowserRouter>
-      <Body />
-    </BrowserRouter>
+      <BrowserRouter>
+        <Body />
+      </BrowserRouter>
     </>
   )
 }

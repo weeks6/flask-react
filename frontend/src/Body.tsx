@@ -17,9 +17,11 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { refreshAccessToken, userRequset } from 'Common/Auth/ApiRequests'
 import { AddFab } from 'Components/Controls/AddFab'
+import { TodoItem } from 'Common/Todo/ItemInterface';
 
 export const Body: React.FC = ({}) => {
 
+  const [todos, setTodos] = useState([] as TodoItem[])
   const [user, setUser] = useState({} as User)
   // const [items, setItems] = useState([])
   const history = useHistory()
@@ -72,9 +74,9 @@ export const Body: React.FC = ({}) => {
             <Route path="/signup">
                 <SignUp/>
             </Route>
-            <ItemsProvider value={MOCKUP_ITEMS}>
+            <ItemsProvider value={todos}>
               <GuardedRoute path="/today">
-                  <Today/>
+                  <Today setTodos={setTodos}/>
               </GuardedRoute>
               <GuardedRoute path="/profile">
                   <Profile/>

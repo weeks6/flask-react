@@ -20,7 +20,7 @@ select:-webkit-autofill:focus {
     flex-direction: column;
     padding-top: 1.2rem;
     word-wrap: break-word;
-    min-width: 300px;
+    min-width: 0.9375%;
   }
   
   .label-text {
