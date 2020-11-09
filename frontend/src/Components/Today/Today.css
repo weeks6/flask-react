@@ -1,0 +1,13 @@
+.today-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.todo-form {
+    width: 90%;
+    height: 50%;
+    display: flex;
+    align-self: center;
+    justify-content: space-between;
+    flex-direction: column;
+}

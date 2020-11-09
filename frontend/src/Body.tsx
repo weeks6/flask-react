@@ -7,7 +7,6 @@ import { ReactComponent as ProfileIconSvg } from "Images/Icons/account_circle-24
 import { Today } from "./Components/Today/Today";
 import { AuthProvider, User } from 'Common/State/AuthContext'
 import { ItemsProvider, MOCKUP_ITEMS } from "Common/State/TodoItemsContext";
-import { TodoItem } from 'Common/Todo/ItemInterface';
 import { Profile } from 'Components/Profile/Profile';
 import { GuardedRoute } from 'Common/GuardedRoute/GuardedRoute'
 import { SignIn } from 'Components/Auth/SignIn';
@@ -17,19 +16,9 @@ import { DrawerItem } from 'Components/DrawerNavigation/DrawerItem';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { refreshAccessToken, userRequset } from 'Common/Auth/ApiRequests'
+import { AddFab } from 'Components/Controls/AddFab'
 
 export const Body: React.FC = ({}) => {
-  const theme = createMuiTheme({
-      palette: {
-        primary: {
-          main: '#333',
-          
-        },
-        secondary: {
-          main: '#c8c8c8',
-        },
-      },
-    });
 
   const [user, setUser] = useState({} as User)
   // const [items, setItems] = useState([])
@@ -60,41 +49,39 @@ export const Body: React.FC = ({}) => {
     return (
     <>
 			<DrawerNavigation>  
-			<DrawerItem ripple to="/today">
-				<TodayIconSvg /> 
-				Today
-			</DrawerItem>
-			<DrawerItem ripple to="/projects">
-				<ProjectIconSvg /> 
-				Projects
-			</DrawerItem>
-			<DrawerItem ripple to="/profile">
-				<ProfileIconSvg /> 
-				You
-			</DrawerItem>
+        <DrawerItem ripple to="/today">
+          <TodayIconSvg /> 
+          Today
+        </DrawerItem>
+        <DrawerItem ripple to="/projects">
+          <ProjectIconSvg /> 
+          Projects
+        </DrawerItem>
+        <DrawerItem ripple to="/profile">
+          <ProfileIconSvg /> 
+          You
+        </DrawerItem>
 			</DrawerNavigation>
 
 			<Switch>
-				<ThemeProvider theme={theme}>
-          <AuthProvider value={user}>
-              <div className="app-body">
-              <Route path="/signin">
-                  <SignIn setUser={setUser}/>
-              </Route>
-              <Route path="/signup">
-                  <SignUp/>
-              </Route>
-              <ItemsProvider value={MOCKUP_ITEMS}>
-                <GuardedRoute path="/today">
-                    <Today/>
-                </GuardedRoute>
-                <GuardedRoute path="/profile">
-                    <Profile/>
-                </GuardedRoute>
-              </ItemsProvider>
-              </div>
-          </AuthProvider> 
-				</ThemeProvider>
+        <AuthProvider value={user}>
+            <div className="app-body">
+            <Route path="/signin">
+                <SignIn setUser={setUser}/>
+            </Route>
+            <Route path="/signup">
+                <SignUp/>
+            </Route>
+            <ItemsProvider value={MOCKUP_ITEMS}>
+              <GuardedRoute path="/today">
+                  <Today/>
+              </GuardedRoute>
+              <GuardedRoute path="/profile">
+                  <Profile/>
+              </GuardedRoute>
+            </ItemsProvider>
+            </div>
+        </AuthProvider> 
 			</Switch>
     </>
     )

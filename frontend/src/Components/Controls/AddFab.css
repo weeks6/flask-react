@@ -1,0 +1,12 @@
+.fab_new-item {
+    align-self: center;
+    background-color: #E4E4E4;
+    width: 40px;
+    height: 40px;
+    outline: none;
+    box-shadow: none;
+    border: none;
+    border-radius: 100%;
+    cursor: pointer;
+    fill: #4B4B4B;
+}

@@ -1,6 +1,7 @@
 import React from 'react'
 import { TodoItem } from 'Common/Todo/ItemInterface';
 import { Item } from "./Item";
+import { AddFab } from 'Components/Controls/AddFab';
 
 interface Props {
     items: TodoItem[]
@@ -13,8 +14,11 @@ export const TodoList: React.FC<Props> = ({items}) => {
     )
 
     return (
-        <ul className="todo-list">
-            {listItems}
-        </ul>
+        <>
+            <ul className="todo-list">
+                {listItems}
+                
+            </ul>
+        </>
     )
 }

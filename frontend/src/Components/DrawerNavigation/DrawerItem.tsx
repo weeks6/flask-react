@@ -11,7 +11,8 @@ interface Props {
 export const DrawerItem: React.FC<Props> = ({to, ripple, children}) => {
     return (
         <>
-            <NavLink to={to} className="drawer-item" activeClassName="drawer-item__active" onClick={ripple ? Ripple : undefined}>
+        <NavLink to={to} className="drawer-item" activeClassName="drawer-item__active" onClick={ripple ? Ripple : undefined}>
+            
             {children}
         </NavLink>
         </>

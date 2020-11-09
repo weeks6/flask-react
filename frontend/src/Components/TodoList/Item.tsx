@@ -22,7 +22,9 @@ export const Item: React.FC<ItemProps> = ({todo, ripple}) => {
 
   return (
     <>
-      <div className="todo-item">
+      <div className="todo-item" onClick={(e) => {
+        Ripple(e) 
+      }}> 
         <Priority priority={priority}/>
         <Checkbox checked={completed} onClick={completeTodo}/>
         <div className="todo-item__body">
