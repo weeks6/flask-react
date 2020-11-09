@@ -11,7 +11,7 @@ export const Projects: React.FC = () => {
     return (
         <>
             <div>
-                User id is {user.id}
+                User id is {user}
             </div>
         </>
     )

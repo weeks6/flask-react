@@ -32,7 +32,6 @@ def auth_signup():
 @app.route('/api/auth/signin', methods=['POST'])
 @cross_origin()
 def auth_signin():
-
     req = dict(json.loads(request.data))
     email, password = req.values()
     try:
@@ -74,7 +73,8 @@ def user():
 @app.route('/api/auth/refresh_token', methods=['GET'])
 def refresh_token():
     REFRESH_TOKEN_SECRET = os.environ.get('REFRESH_TOKEN_SECRET')
-    refresh_token = json.loads(request.data)['refresh_token']
+    refresh_token = str(request.headers.get('Authorization')).split()[1]
+    print(refresh_token)
     if verify_refresh_token(refresh_token)['message'] != 'OK':
         return Response('Unauthenticated', 401)
 

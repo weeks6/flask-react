@@ -1,14 +1,15 @@
 import React from 'react'
-import { Item, IItem } from "./Item";
+import { TodoItem } from 'Common/Todo/ItemInterface';
+import { Item } from "./Item";
 
 interface Props {
-    items: Array<IItem>
+    items: TodoItem[]
 }
 
 export const TodoList: React.FC<Props> = ({items}) => {
 
     const listItems = items.map((item, idx) => 
-        <Item item={item} key={idx} ripple/>
+        <Item todo={item} key={idx} ripple/>
     )
 
     return (

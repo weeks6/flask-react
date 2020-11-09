@@ -8,4 +8,6 @@ class Todo(MongoModel):
     completed = fields.BooleanField()
     title = fields.CharField()
     description = fields.CharField()
+    priority = fields.CharField()
+    experience = fields.IntegerField()
 

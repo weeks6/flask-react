@@ -8,8 +8,8 @@ def create_access_token(user):
 
     payload = {
         'user_id': str(user._id),
-        # 15 minutes
-        'exp': datetime.datetime.now() + datetime.timedelta(seconds=15)
+        # 30 minutes
+        'exp': datetime.datetime.now() + datetime.timedelta(minutes=30)
     }
 
     access_token = jwt.encode(payload, TOKEN_SECRET, algorithm='HS256')

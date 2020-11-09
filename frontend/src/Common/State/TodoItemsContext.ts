@@ -1,147 +1,19 @@
 import React from 'react'
-import { IItem } from "Components/TodoList/Item";
+import { TodoItem } from "Common/Todo/ItemInterface";
+import { Priorities } from 'Common/Todo/PrioritiesEnum';
 
-export const MOCKUP_ITEMS: Array<IItem> = [
+export const MOCKUP_ITEMS: TodoItem[] = [
     {
+      user_id: "bruhruhbr",
+      project_id: "awdawdawdawd",
+      project_title: "awdawda",
+      date: "23.11.2020",
       title: "Test Title",
-      exp: 1000,
-      priority: "Average",
+      experience: 1000,
+      priority: Priorities.Average,
       completed: false,
       description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title loawdjawdawydvuadawdauiwdgawdugaiwda",
-      exp: 500,
-      priority: "High",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title",
-      exp: 1000,
-      priority: "Low",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title",
-      exp: 700,
-      priority: "Average",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title",
-      exp: 1000,
-      priority: "Average",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title loawdjawdawydvuadawdauiwdgawdugaiwda",
-      exp: 500,
-      priority: "High",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title",
-      exp: 1000,
-      priority: "Low",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title",
-      exp: 700,
-      priority: "Average",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title",
-      exp: 1000,
-      priority: "Average",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title loawdjawdawydvuadawdauiwdgawdugaiwda",
-      exp: 500,
-      priority: "High",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title",
-      exp: 1000,
-      priority: "Low",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title",
-      exp: 700,
-      priority: "Average",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title",
-      exp: 1000,
-      priority: "Average",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title loawdjawdawydvuadawdauiwdgawdugaiwda",
-      exp: 500,
-      priority: "High",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title",
-      exp: 1000,
-      priority: "Low",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title",
-      exp: 700,
-      priority: "Average",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title",
-      exp: 1000,
-      priority: "Average",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title loawdjawdawydvuadawdauiwdgawdugaiwda",
-      exp: 500,
-      priority: "High",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title",
-      exp: 1000,
-      priority: "Low",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
-    {
-      title: "Test Title",
-      exp: 700,
-      priority: "Average",
-      completed: false,
-      description: "Test Description wdawdwadadawdawdawdawd"
-    },
+    }
 ]
 
 export const ItemsContext = React.createContext(MOCKUP_ITEMS)

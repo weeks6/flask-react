@@ -1,5 +1,5 @@
 import React from 'react'
-import { Priorities } from "./EPriority"
+import { Priorities } from "Common/Todo/PrioritiesEnum"
 
 interface Props {
     priority: keyof typeof Priorities
@@ -28,6 +28,6 @@ export const Priority: React.FC<Props> = ({priority}) => {
     }
 
     return (
-        <div className="priority-orb" style={{backgroundColor: bgColor}}></div>
+        <div className="priority" style={{backgroundColor: bgColor}}></div>
     )
 }

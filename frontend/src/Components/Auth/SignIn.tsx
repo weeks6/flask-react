@@ -1,69 +1,60 @@
 import './Form.css'
-import React, { ChangeEvent, FormEvent, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import axios from 'axios'
-import { Field } from "Components/Auth/Field";
-import { AuthContext } from "Common/State/AuthContext"
+import React, { FormEvent, useState } from 'react'
+import { Button, TextField } from "@material-ui/core";
+import axios from 'axios';
+import { useHistory } from 'react-router';
+import { User } from 'Common/State/AuthContext';
 
-interface FormFields {
-    email?: string
-    password?: string
+interface Props {
+    setUser: React.Dispatch<React.SetStateAction<User>>
 }
 
-export const SignIn: React.FC = () => {
+export const SignIn: React.FC<Props> = ({setUser}) => {
+
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
     const history = useHistory()
 
-    // TODO: come up with a better way to set initial form state
-    const [formState, setFormState] = useState({
-        email: '',
-        password: ''
-    } as FormFields)
-
-    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const SignIn = (e: FormEvent) => {
         e.preventDefault()
-        setFormState({...formState, email: e.target.value})
-    }
 
-    const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault()
-        setFormState({...formState, password: e.target.value})
-    }
-
-    const submitSignIn = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
         const url = `http://${process.env.REACT_APP_BACKEND}/api/auth/signin`
-        const payload = formState
 
-        fetch(url, {
-            method: 'POST',
-            mode: 'cors', 
-            credentials: "include",
-            body: JSON.stringify(payload)
-        }) 
-            .then(res => {
-                if (res.status === 200) {
-                    return res
-                } else {
-                    throw new Error('Wrong creds')
-                }
-            })
-            .then(res => res.json())
-            .then(data =>{
-                localStorage.setItem('jid', data.access_token)
-                history.push('/profile')
+        axios.post(url, {
+            email,
+            password
+        }).then(res => {
+            if (res.status === 200) {
+                const url = `http://${process.env.REACT_APP_BACKEND}/api/auth/user`
+                localStorage.setItem('actk', res.data.access_token)
+                localStorage.setItem('rftk', res.data.refresh_token)
                 
-            })
-            .catch(e => console.log(e))
-        }
+                axios.get(url, {
+                    data: {
+                        'refresh_token': localStorage.getItem('rftk')
+                    },
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('actk')}`
+                    }
+                }).then(res => {
+                    setUser(res.data)
+                })
+                .catch(e => console.log(e))
+
+                history.push('/today')
+            }
+        })
+        .catch(e => console.log(e))
+
+    }
 
     return (
-        <>
-            <form className="form" onSubmit={(e) => submitSignIn(e)}>
-                <Field type="email" label="Email" value={formState.email} onChange={handleEmailChange}/>
-                <Field type="password" label="Password" value={formState.password} onChange={handlePasswordChange}/>
-                <input type="submit" value="Submit"/>
-            </form>
-        </>
+        <form onSubmit={e => SignIn(e)} className='form'>
+            <TextField type='email' value={email} onChange={e => setEmail(e.target.value)} label="Email"></TextField>
+            <TextField type='password' value={password} onChange={e => setPassword(e.target.value)} label="Password"></TextField>
+            <Button type='submit'>Sign In</Button>
+        </form> 
     )
 }

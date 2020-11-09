@@ -9,7 +9,7 @@ interface Props {
 
 export const GuardedRoute: React.FC<Props> = ({children, path, ...rest }) => {
 
-    const isAuth = localStorage.getItem('jid')
+    const isAuth = localStorage.getItem('actk')
     
     return (
         <Route {...rest} path={path} render={() => (
