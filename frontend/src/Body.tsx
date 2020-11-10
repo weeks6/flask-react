@@ -6,24 +6,21 @@ import { ReactComponent as ProjectIconSvg } from "Images/Icons/receipt_long-24px
 import { ReactComponent as ProfileIconSvg } from "Images/Icons/account_circle-24px.svg"
 import { Today } from "./Components/Today/Today";
 import { AuthProvider, User } from 'Common/State/AuthContext'
-import { ItemsProvider, MOCKUP_ITEMS } from "Common/State/TodoItemsContext";
+import { ItemsProvider, useTodos } from "Common/State/TodoItemsContext";
 import { Profile } from 'Components/Profile/Profile';
 import { GuardedRoute } from 'Common/GuardedRoute/GuardedRoute'
 import { SignIn } from 'Components/Auth/SignIn';
 import { SignUp } from 'Components/Auth/SignUp'
 import { DrawerNavigation } from 'Components/DrawerNavigation/DrawerNavigation';
 import { DrawerItem } from 'Components/DrawerNavigation/DrawerItem';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
 import { refreshAccessToken, userRequset } from 'Common/Auth/ApiRequests'
-import { AddFab } from 'Components/Controls/AddFab'
 import { TodoItem } from 'Common/Todo/ItemInterface';
 
-export const Body: React.FC = ({}) => {
+export const Body: React.FC = ({ }) => {
 
-  const [todos, setTodos] = useState([] as TodoItem[])
+  const todos = useTodos()
   const [user, setUser] = useState({} as User)
-  // const [items, setItems] = useState([])
+
   const history = useHistory()
 
   const fetchUser = async () => {
@@ -46,45 +43,45 @@ export const Body: React.FC = ({}) => {
     }
   }
 
-  useEffect(() => {fetchUser()}, [])
+  useEffect(() => { fetchUser() }, [])
 
-    return (
+  return (
     <>
-			<DrawerNavigation>  
+      <DrawerNavigation>
         <DrawerItem ripple to="/today">
-          <TodayIconSvg /> 
+          <TodayIconSvg />
           Today
         </DrawerItem>
         <DrawerItem ripple to="/projects">
-          <ProjectIconSvg /> 
+          <ProjectIconSvg />
           Projects
         </DrawerItem>
         <DrawerItem ripple to="/profile">
-          <ProfileIconSvg /> 
+          <ProfileIconSvg />
           You
         </DrawerItem>
-			</DrawerNavigation>
+      </DrawerNavigation>
 
-			<Switch>
+      <Switch>
         <AuthProvider value={user}>
-            <div className="app-body">
+          <div className="app-body">
             <Route path="/signin">
-                <SignIn setUser={setUser}/>
+              <SignIn setUser={setUser} />
             </Route>
             <Route path="/signup">
-                <SignUp/>
+              <SignUp />
             </Route>
             <ItemsProvider value={todos}>
               <GuardedRoute path="/today">
-                  <Today setTodos={setTodos}/>
+                <Today />
               </GuardedRoute>
               <GuardedRoute path="/profile">
-                  <Profile/>
+                <Profile />
               </GuardedRoute>
             </ItemsProvider>
-            </div>
-        </AuthProvider> 
-			</Switch>
+          </div>
+        </AuthProvider>
+      </Switch>
     </>
-    )
+  )
 }

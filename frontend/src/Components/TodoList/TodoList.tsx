@@ -10,14 +10,13 @@ interface Props {
 export const TodoList: React.FC<Props> = ({items}) => {
 
     const listItems = items.map((item, idx) => 
-        <Item todo={item} key={idx} ripple/>
+        <Item todo={item} key={idx} idx={idx} ripple/>
     )
 
     return (
         <>
             <ul className="todo-list">
                 {listItems}
-                
             </ul>
         </>
     )

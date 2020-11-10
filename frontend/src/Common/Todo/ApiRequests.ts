@@ -27,5 +27,18 @@ export const SaveTodo = async (todoItem: TodoItem) => {
     })
 
     return response
+}
 
+
+export const EditTodo = async (todoItem: TodoItem) => {
+    const API_SAVE_TODO = `http://${process.env.REACT_APP_BACKEND}/api/todos/edit`
+
+    const response = axios.post(API_SAVE_TODO, todoItem, {
+        headers: {
+            'Authorization': `Bearer ${getAccessToken()}`
+        }}).catch((err: AxiosError) => {
+          return err.response
+    })
+
+    return response
 }

@@ -1,6 +1,6 @@
 import './Form.css'
-import React, { FormEvent, useState } from 'react'
-import { Button, TextField } from "@material-ui/core";
+import React, { ChangeEvent, FormEvent, useState } from 'react'
+import { TextField } from 'Components/Controls/TextField/TextField'
 import axios from 'axios';
 import { useHistory } from 'react-router';
 import { User } from 'Common/State/AuthContext';
@@ -52,9 +52,9 @@ export const SignIn: React.FC<Props> = ({setUser}) => {
 
     return (
         <form onSubmit={e => SignIn(e)} className='form'>
-            <TextField type='email' value={email} onChange={e => setEmail(e.target.value)} label="Email"></TextField>
-            <TextField type='password' value={password} onChange={e => setPassword(e.target.value)} label="Password"></TextField>
-            <Button type='submit'>Sign In</Button>
+            <TextField type='email' value={email} onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setEmail(e.target.value)} label="Email"></TextField>
+            <TextField type='password' value={password} onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setPassword(e.target.value)} label="Password"></TextField>
+            <button type='submit'>Sign In</button>
         </form> 
     )
 }

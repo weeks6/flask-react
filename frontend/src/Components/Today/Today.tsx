@@ -10,17 +10,16 @@ import 'Components/Today/Today.css'
 import { TextField } from 'Components/Controls/TextField/TextField'
 import { MenuItem, FormControl, InputLabel, Button } from '@material-ui/core';
 import { Priorities } from 'Common/Todo/PrioritiesEnum';
-import {Select, Option} from 'Components/Controls/Select/Select'
+import { Select, Option } from 'Components/Controls/Select/Select'
 import { SaveTodo, TodoRequest } from 'Common/Todo/ApiRequests';
 
 
 interface Props {
-    setTodos: any
 }
 
-export const Today: React.FC<Props> = ({setTodos}) => {
+export const Today: React.FC<Props> = () => {
 
-    const items = useContext(ItemsContext)
+    const { todos, setAllTodos } = useContext(ItemsContext)
 
     const fetchTodos = async () => {
         // make ensureTokenAccess() function to run before every such request
@@ -28,24 +27,33 @@ export const Today: React.FC<Props> = ({setTodos}) => {
         const response = await TodoRequest()
 
         if (response?.status === 200) {
-            setTodos(response.data)
+            setAllTodos(response.data)
         }
 
-    }   
+    }
 
-    const createTodo = async (values: TodoItem, setSubmitting:  (isSubmitting: boolean) => void) => {
+    const createTodo = async (values: TodoItem, setSubmitting: (isSubmitting: boolean) => void) => {
         setSubmitting(true)
-        
+
         const response = await SaveTodo(values)
 
         if (response?.status === 200) {
             // update context
-            setTodos([...items, values])
-            setSubmitting(false)
-        }
-    }   
+            setAllTodos([...todos, values])
 
-    useEffect(() => {fetchTodos()}, [])
+            formValues.project_title = ''
+            formValues.title = ''
+            formValues.description = ''
+            formValues.completed = false
+            formValues.date = ''
+            formValues.experience = 0
+            formValues.priority = 'Average'
+            setSubmitting(false)
+            setDrawer({ ...drawer, active: false })
+        }
+    }
+
+    useEffect(() => { fetchTodos() }, [])
     const [drawer, setDrawer] = useState({
         active: false,
         todo: {} as TodoItem
@@ -65,67 +73,51 @@ export const Today: React.FC<Props> = ({setTodos}) => {
 
     return (
         <div className="today-body">
-            <TodoList items={items}/>
+            <TodoList items={todos} />
             <AddFab onClick={() => {
-                setDrawer({...drawer, active: !drawer.active})
-            }}/>
+                setDrawer({ ...drawer, active: !drawer.active })
+            }} />
             <Drawer active={drawer.active} setDrawer={setDrawer}>
                 <DrawerTitle text="New task for today" />
                 <Formik
                     initialValues={formValues}
                     onSubmit={(values, { setSubmitting }) => createTodo(values, setSubmitting)}
-                    >
+                >
                     {({ isSubmitting }) => (
                         <Form className='todo-form'>
                             <Field name="project_title">
-                                {({field}: FieldProps) => <TextField type="text" label="Project Title" {...field}/>}
+                                {({ field }: FieldProps) => <TextField type="text" label="Project Title" {...field} />}
                             </Field>
                             <ErrorMessage name="project_title" component="div" />
 
                             <Field name="title">
-                                {({field}: FieldProps) => <TextField type="text" label="Title" {...field}/>}
+                                {({ field }: FieldProps) => <TextField type="text" label="Title" {...field} />}
                             </Field>
                             <ErrorMessage name="title" component="div" />
 
                             <Field name="description">
-                                {({field}: FieldProps) => <TextField type="text" label="Description" {...field}/>}
+                                {({ field }: FieldProps) => <TextField type="text" label="Description" {...field} />}
                             </Field>
                             <ErrorMessage name="description" component="div" />
 
                             <Field name="date">
-                                {({field}: FieldProps) => <TextField type="date" label="Date" {...field}/>}
+                                {({ field }: FieldProps) => <TextField type="date" label="Date" {...field} />}
                             </Field>
                             <ErrorMessage name="date" component="div" />
 
                             <Field name="experience">
-                                {({field}: FieldProps) => <TextField type="number" label="Experience" {...field}/>}
+                                {({ field }: FieldProps) => <TextField type="number" label="Experience" {...field} />}
                             </Field>
                             <ErrorMessage name="experience" component="div" />
-                            
+
                             <Field as="select" name="priority">
                                 {PrioritiesArr.map((value, idx) => <option value={value} key={idx}>{value}</option>)}
                             </Field>
                             <ErrorMessage name="priority" component="div" />
-                            <Button type="submit" disabled={isSubmitting}>Add</Button>
+                            <button type="submit" disabled={isSubmitting}>Add</button>
                         </Form>
                     )}
-                    </Formik>
-                {/* <form className="todo-form" onSubmit={createTodo}>
-                    <TextField type="text" label="Title"/>
-                    <TextField type="textarea" label="Description"/>
-                    <FormControl >
-                    <InputLabel id="priority-select">Priority</InputLabel>
-                        <Select labelId="priority-select">
-                            <MenuItem value={Priorities.Low}>{Priorities.Low}</MenuItem>
-                            <MenuItem value={Priorities.Average}>{Priorities.Average}</MenuItem>
-                            <MenuItem value={Priorities.High}>{Priorities.High}</MenuItem>
-                            <MenuItem value={Priorities.Great}>{Priorities.Great}</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <TextField type="number" label="Experience"/>
-                    <TextField type="date" label="Date"/>
-                    <Button type="submit">Add</Button>
-                </form> */}
+                </Formik>
             </Drawer>
         </div>
     )
