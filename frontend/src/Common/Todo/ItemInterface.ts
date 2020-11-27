@@ -1,6 +1,7 @@
 import { Priorities } from 'Common/Todo/PrioritiesEnum'
 
 export interface TodoItem {
+    _id?: string,
     user_id?: string,
     project_id?: string,
     project_title: string,
@@ -9,5 +10,5 @@ export interface TodoItem {
     title: string,
     description: string,
     priority: keyof typeof Priorities,
-    experience: number
+    // experience: number
 }

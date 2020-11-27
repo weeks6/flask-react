@@ -8,8 +8,9 @@ import { Drawer, DrawerTitle } from 'Components/Drawer/Drawer'
 import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik'
 import { TextField } from 'Components/Controls/TextField/TextField'
 import { Priorities } from 'Common/Todo/PrioritiesEnum'
-import { EditTodo } from 'Common/Todo/ApiRequests'
-import { ItemsContext, useTodos } from 'Common/State/TodoItemsContext'
+import { DeleteTodo, EditTodo } from 'Common/Todo/ApiRequests'
+import { ItemsContext } from 'Common/State/TodoItemsContext'
+import { ReactComponent as DeleteIconSvg } from 'Images/Icons/delete-24px.svg'
 
 export interface ItemProps {
   todo: TodoItem,
@@ -19,23 +20,39 @@ export interface ItemProps {
 
 export const Item: React.FC<ItemProps> = ({ todo, idx }) => {
 
-  const { setOneTodo } = useContext(ItemsContext)
+  const { setOneTodo, deleteOneTodo } = useContext(ItemsContext)
 
   const [item, setItem] = useState(todo)
-  const { project_title, title, experience, priority, date, completed, description } = item
+  const { project_title, title, priority, date, completed, description } = item
 
-  const completeTodo = () => {
-    setItem({ ...item, completed: !completed, })
+  const completeTodo = async () => {
+    const response = await EditTodo({...item, completed: !completed})
+
+    if (response?.status === 200) {
+        // update context
+        // console.log(response.data);
+        
+        setOneTodo(idx, response.data)
+        setItem({ ...item, completed: !completed, })
+    }
+  }
+
+  const deleteTodo = async () => {
+    const response = await DeleteTodo(item._id!)
+
+    if (response?.status === 200) deleteOneTodo(idx)
   }
 
   const editTodo = async (values: TodoItem, setSubmitting: (isSubmitting: boolean) => void) => {
     setSubmitting(true)
+    // console.log({...item, ...values});
     
     const response = await EditTodo({...item, ...values})
 
     if (response?.status === 200) {
         // update context
-        setOneTodo(idx, {...item, ...values})
+        setOneTodo(idx, response.data)
+        setItem(response.data)
         setSubmitting(false)
         setDrawer({...drawer, active: false})
     }
@@ -55,7 +72,7 @@ export const Item: React.FC<ItemProps> = ({ todo, idx }) => {
     description,
     completed: false,
     date,
-    experience,
+    // experience,
     priority
   }
 
@@ -63,18 +80,20 @@ export const Item: React.FC<ItemProps> = ({ todo, idx }) => {
     <>
       <div className="todo-item" onClick={(e) => {
         Ripple(e)
-        setDrawer({...drawer, active: !drawer.active})
       }}>
         <Priority priority={priority} />
         <Checkbox checked={completed} onClick={completeTodo} />
-        <div className="todo-item__body">
+        <div className="todo-item__body" onClick={() => setDrawer({...drawer, active: !drawer.active})}>
           <div className="todo-item__body-upper">
             <p className="todo-item__project-name">{project_title}</p>
-            <span className="todo-item__experience">{experience}</span>
+            {/* <span className="todo-item__experience">{experience}</span> */}
             <span className="todo-item__date">{date}</span>
           </div>
           <h2 className="todo-item__title">{title}</h2>
         </div>
+        <span className="delete-button" onClick={() => {deleteTodo()}}>
+          <DeleteIconSvg />
+        </span>
       </div>
       <Drawer active={drawer.active} setDrawer={setDrawer}>
         <DrawerTitle text="Edit task" />
@@ -104,10 +123,10 @@ export const Item: React.FC<ItemProps> = ({ todo, idx }) => {
               </Field>
               <ErrorMessage name="date" component="div" />
 
-              <Field name="experience">
+              {/* <Field name="experience">
                 {({ field }: FieldProps) => <TextField type="number" label="Experience" {...field} />}
               </Field>
-              <ErrorMessage name="experience" component="div" />
+              <ErrorMessage name="experience" component="div" /> */}
 
               <Field as="select" name="priority">
                 {PrioritiesArr.map((value, idx) => <option value={value} key={idx}>{value}</option>)}

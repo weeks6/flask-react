@@ -7,6 +7,7 @@ def verify_token(token):
     TOKEN_SECRET = str(os.environ.get('TOKEN_SECRET'))
     try:
         payload = jwt.decode(token, TOKEN_SECRET, algorithms=['HS256'])
+        # print(payload)
         payload['message'] = 'OK'
         return payload
     except ExpiredSignatureError:

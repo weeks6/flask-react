@@ -4,13 +4,15 @@ import { TodoItem } from "Common/Todo/ItemInterface";
 interface TodosContext {
   todos: TodoItem[],
   setAllTodos: (todos: TodoItem[]) => void,
-  setOneTodo: (idx: number ,todo: TodoItem) => void
+  setOneTodo: (idx: number, todo: TodoItem) => void,
+  deleteOneTodo: (idx: number) => void
 }
 
 const TODOS_DEFAULT_VALUE: TodosContext = {
   todos: [],
   setAllTodos: () => {},
-  setOneTodo: () => {}
+  setOneTodo: () => {},
+  deleteOneTodo: () => {}
 }
 
 export const useTodos = () => {
@@ -21,21 +23,27 @@ export const useTodos = () => {
     }
 
     const setOneTodo = (todo_idx: number, todo: TodoItem) => {
+      // console.log(todos);
       
       const newTodos = todos.map((val, idx) => {
         if (idx === todo_idx) {
           return todo
         } else return val
       })
-      console.log(newTodos)
       
       setTodos(newTodos)
+    }
+
+    const deleteOneTodo = (idx: number) => {
+        const newTodos = todos.filter((_, id) => idx !== id)
+        setTodos(newTodos)
     }
 
     return {
       todos,
       setAllTodos,
-      setOneTodo
+      setOneTodo,
+      deleteOneTodo
     }
 }
 

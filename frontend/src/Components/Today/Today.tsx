@@ -12,6 +12,8 @@ import { MenuItem, FormControl, InputLabel, Button } from '@material-ui/core';
 import { Priorities } from 'Common/Todo/PrioritiesEnum';
 import { Select, Option } from 'Components/Controls/Select/Select'
 import { SaveTodo, TodoRequest } from 'Common/Todo/ApiRequests';
+import { refreshAccessToken } from 'Common/Auth/ApiRequests';
+import { useHistory } from 'react-router';
 
 
 interface Props {
@@ -21,39 +23,27 @@ export const Today: React.FC<Props> = () => {
 
     const { todos, setAllTodos } = useContext(ItemsContext)
 
-    const fetchTodos = async () => {
-        // make ensureTokenAccess() function to run before every such request
-
-        const response = await TodoRequest()
-
-        if (response?.status === 200) {
-            setAllTodos(response.data)
-        }
-
-    }
-
     const createTodo = async (values: TodoItem, setSubmitting: (isSubmitting: boolean) => void) => {
         setSubmitting(true)
 
         const response = await SaveTodo(values)
 
         if (response?.status === 200) {
-            // update context
-            setAllTodos([...todos, values])
+            
+            setAllTodos([...todos, response.data])
 
             formValues.project_title = ''
             formValues.title = ''
             formValues.description = ''
             formValues.completed = false
             formValues.date = ''
-            formValues.experience = 0
+            // formValues.experience = 0
             formValues.priority = 'Average'
             setSubmitting(false)
             setDrawer({ ...drawer, active: false })
         }
     }
 
-    useEffect(() => { fetchTodos() }, [])
     const [drawer, setDrawer] = useState({
         active: false,
         todo: {} as TodoItem
@@ -65,7 +55,7 @@ export const Today: React.FC<Props> = () => {
         description: '',
         completed: false,
         date: '',
-        experience: 0,
+        // experience: 0,
         priority: 'Average'
     }
 
@@ -75,7 +65,7 @@ export const Today: React.FC<Props> = () => {
         <div className="today-body">
             <TodoList items={todos} />
             <AddFab onClick={() => {
-                setDrawer({ ...drawer, active: !drawer.active })
+                setDrawer({ todo: {} as TodoItem, active: !drawer.active })
             }} />
             <Drawer active={drawer.active} setDrawer={setDrawer}>
                 <DrawerTitle text="New task for today" />
@@ -105,9 +95,9 @@ export const Today: React.FC<Props> = () => {
                             </Field>
                             <ErrorMessage name="date" component="div" />
 
-                            <Field name="experience">
+                            {/* <Field name="experience">
                                 {({ field }: FieldProps) => <TextField type="number" label="Experience" {...field} />}
-                            </Field>
+                            </Field> */}
                             <ErrorMessage name="experience" component="div" />
 
                             <Field as="select" name="priority">

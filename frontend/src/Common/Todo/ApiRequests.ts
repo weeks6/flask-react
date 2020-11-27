@@ -31,9 +31,22 @@ export const SaveTodo = async (todoItem: TodoItem) => {
 
 
 export const EditTodo = async (todoItem: TodoItem) => {
-    const API_SAVE_TODO = `http://${process.env.REACT_APP_BACKEND}/api/todos/edit`
+    const API_EDIT_TODO = `http://${process.env.REACT_APP_BACKEND}/api/todos/edit`
 
-    const response = axios.post(API_SAVE_TODO, todoItem, {
+    const response = axios.post(API_EDIT_TODO, todoItem, {
+        headers: {
+            'Authorization': `Bearer ${getAccessToken()}`
+        }}).catch((err: AxiosError) => {
+          return err.response
+    })
+
+    return response
+}
+
+export const DeleteTodo = async (id: string) => {
+    const API_DELETE_TODO = `http://${process.env.REACT_APP_BACKEND}/api/todos/delete/one`
+
+    const response = axios.post(API_DELETE_TODO, {id}, {
         headers: {
             'Authorization': `Bearer ${getAccessToken()}`
         }}).catch((err: AxiosError) => {
